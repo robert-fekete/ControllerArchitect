@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Management;
 
 namespace Pendulum
 {
-    public abstract class Connection : IProcess
+    public abstract class AConnection : Management.IProcess
     {
         private double reference;
         protected string[] inputLabels;

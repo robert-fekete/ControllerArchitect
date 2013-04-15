@@ -37,19 +37,23 @@ namespace Management
             //IProcess tempLogger = new DatabaseBasedLogger(tempProc);
 
             Assembly ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\TestAccession\TestAccession\bin\Release\TestAccession.dll");
+            //Assembly ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\DeviceAccession\DeviceAccession\bin\Release\DeviceAccession.dll");
             Type type = ass.GetType("Pendulum.TestAccession");
-            
+
+            Type AccessionBaseType = type.BaseType;
+         
             ConstructorInfo con1 = type.GetConstructor(new Type[0] {});
             dynamic tempAcc = con1.Invoke(new object[0] {});
 
             ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\ModulConnection\ModulConnection\bin\Release\ModulConnection.dll");
             type = ass.GetType("Pendulum.ModulConnection");
+
+            Type IProcInterface = type.GetInterfaces()[0];
+
             //Pendulum.APendulumAccession tipusu konstruktor
-            ConstructorInfo con2 = type.GetConstructor(new Type[1] { ass.GetType("Pendulum.APendulumAccession")});
+            ConstructorInfo con2 = type.GetConstructor(new Type[1] { AccessionBaseType });
             
             dynamic tempProc = con2.Invoke(new object[1] { tempAcc });
-
-            
             
             //Assembly ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\EmptyLogger\EmptyLogger\bin\Release\EmptyLogger.dll");
             ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\FileBasedLogger\FileBasedLogger\bin\Release\FileBasedLogger.dll");
@@ -57,7 +61,8 @@ namespace Management
 
             type = ass.GetType("Log.FileBasedLogger");
 
-            con1 = type.GetConstructor(new Type[3]{typeof(IProcess),typeof(string[]),typeof(string[])});
+            con1 = type.GetConstructor(new Type[3]{IProcInterface,typeof(string[]),typeof(string[])});
+
             
             dynamic tempLogger = con1.Invoke(new object[3]{tempProc,tempProc.getInputLabels(),tempProc.getOutputLabels()});
 

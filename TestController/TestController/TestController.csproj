@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Management">
-      <HintPath>..\..\Management\Management\bin\Debug\Management.exe</HintPath>
+    <Reference Include="Controller">
+      <HintPath>..\..\Controller\Controller\bin\Release\Controller.dll</HintPath>
     </Reference>
-    <Reference Include="Management.vshost">
-      <HintPath>..\..\Management\Management\bin\Debug\Management.vshost.exe</HintPath>
+    <Reference Include="IProcess">
+      <HintPath>..\..\IProcess\IProcess\bin\Release\IProcess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

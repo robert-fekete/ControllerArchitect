@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Management;
 
 namespace Pendulum
 {
-    public class ModulConnection : Connection, Management.IProcess
+    public class ModulConnection : AConnection, Management.IProcess
     {
         private APendulumAccession accession;
 
