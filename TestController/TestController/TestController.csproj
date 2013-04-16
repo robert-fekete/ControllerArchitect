@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Controller">
-      <HintPath>..\..\Controller\Controller\bin\Release\Controller.dll</HintPath>
+    <Reference Include="AController">
+      <HintPath>..\..\Controller\Controller\bin\Release\AController.dll</HintPath>
     </Reference>
     <Reference Include="IProcess">
       <HintPath>..\..\IProcess\IProcess\bin\Release\IProcess.dll</HintPath>
@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestController.cs" />
   </ItemGroup>

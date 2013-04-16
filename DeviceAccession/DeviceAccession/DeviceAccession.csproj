@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="APendulumAccession">
+      <HintPath>..\..\APendulumAccession\APendulumAccession\bin\Release\APendulumAccession.dll</HintPath>
+    </Reference>
     <Reference Include="ModulConnection">
       <HintPath>..\..\ModulConnection\ModulConnection\bin\Release\ModulConnection.dll</HintPath>
     </Reference>

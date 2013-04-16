@@ -32,14 +32,20 @@ namespace Pendulum
 
         public DeviceAccession()
         {
-
+            //Az attributumok elérésénél a lockhoz a szinkronizációs objektum
             lockAttributes = new object();
+
+            //Kiírás, a függvény működésének észleléséhez
             Console.WriteLine("Konstruktor");
+
             /*
+            //Ha ez a két sor nem volt kikommentezve, akkor már a felettük lévő "Konstruktort" se írta ki
             DAQ = DaqSystem.Local.LoadDevice("Dev1");
             DAQ.SelfCalibrate();
+             * 
+             * */
 
-            ditask = new Task();
+            /*ditask = new Task();
             dotask = new Task();
             aitask = new Task();
 
@@ -64,10 +70,10 @@ namespace Pendulum
             */
         }
 
-        private void updateDevice()
+        /*private void updateDevice()
         {
             throw new System.NotImplementedException();
-        }
+        }*/
 
         public override double[,] updateAnalogInput()
         {
