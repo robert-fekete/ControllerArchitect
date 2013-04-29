@@ -34,8 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PIDController\PIDController\bin\Release\AController.dll</HintPath>
+    </Reference>
+    <Reference Include="IProcess">
+      <HintPath>..\..\dlls\IProcess.dll</HintPath>
+    </Reference>
+    <Reference Include="PIDController">
+      <HintPath>..\..\PIDController\PIDController\bin\Release\PIDController.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,11 +71,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Management.cs" />
     <Compile Include="MyUserControlls.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MyUserControlls.Designer.cs">
       <DependentUpon>MyUserControlls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopUp.Designer.cs">
+      <DependentUpon>PopUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyUserControlls.resx">
       <DependentUpon>MyUserControlls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PopUp.resx">
+      <DependentUpon>PopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

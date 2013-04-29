@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Management
 {
@@ -27,5 +28,9 @@ namespace Management
         }
 
         public abstract void Run();
+
+        public abstract void Run(TextBox _in);
+
+        public abstract UserControl getInterface();
     }
 }

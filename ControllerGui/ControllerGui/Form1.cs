@@ -11,50 +11,45 @@ namespace ControllerGui
 {
     public partial class Form1 : Form
     {
+        public AssemblyPicker pck;
+
         public Form1()
         {
             InitializeComponent();
-            AssemblyPicker pck = new AssemblyPicker();
+            pck = new AssemblyPicker(this);
             pck.Location = new System.Drawing.Point(22, 0);
-            pck.Size = new System.Drawing.Size(440, 400);
+            pck.Size = new System.Drawing.Size(440, 376);
             pck.TabIndex = 2;
             this.splitContainer1.Panel1.Controls.Add(pck);
 
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.WorkerSupportsCancellation = true;
         }
 
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        public void controllerSelected(UserControl _input)
         {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            pck.Dispose();
+            UserControl UI = _input;
+            UI.Location = new System.Drawing.Point(22, 0);
+            UI.Size = new System.Drawing.Size(440, 376);
+            UI.TabIndex = 2;
+            this.splitContainer1.Panel1.Controls.Add(UI);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Chooser alma = new Chooser();
-            alma.Location = new System.Drawing.Point(22, 39);
-            alma.Name = "alma";
-            alma.Size = new System.Drawing.Size(440, 270);
-            alma.TabIndex = 2;
-            this.splitContainer1.Panel1.Controls.Add(alma);
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Management.Controller.Run(textBox1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
+            textBox1.AppendText("SZARSZARSZAR\n");
         }
     }
 }

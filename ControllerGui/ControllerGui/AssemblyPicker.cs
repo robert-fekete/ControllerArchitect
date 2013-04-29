@@ -7,16 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using Controller;
 
 namespace ControllerGui
 {
     public partial class AssemblyPicker : UserControl
     {
         private static readonly string defaultFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        public AssemblyPicker()
+        private static readonly string defaultPickFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\PIDController\PIDController\bin\Release";
+        private Form1 owner;
+        
+        public AssemblyPicker(Form1 _owner)
         {
+            owner = _owner;
+
             InitializeComponent();
-            openFileDialog1.InitialDirectory = defaultFolder;
+            
+            openFileDialog1.InitialDirectory = defaultPickFolder;
             openFileDialog1.Title = "Choose some additional assemblies...";
 
             System.IO.DirectoryInfo defDir = new System.IO.DirectoryInfo(defaultFolder);
@@ -214,6 +221,20 @@ namespace ControllerGui
                 textBox4.Clear();
             }
             textBox4.Select(textBox4.Text.Length, 0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UserControl temp = Management.Controller.getInterface();
+            owner.controllerSelected(temp);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (Management.InitSession(this))
+            {
+                button1.Enabled = true;
+            }
         }
     }
 }
