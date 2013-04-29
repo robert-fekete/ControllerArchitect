@@ -62,8 +62,10 @@ namespace Management
             dynamic tempLogger = con1.Invoke(new object[3]{tempProc,tempProc.getInputLabels(),tempProc.getOutputLabels()});
 
             //A szabályozó betöltése
-            ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\TestController\TestController\bin\Release\TestController.dll");
-            type = ass.GetType("Controller.TestController");
+            //ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\TestController\TestController\bin\Release\TestController.dll");
+            //type = ass.GetType("Controller.TestController");
+            ass = Assembly.LoadFrom(@"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\PIDController\PIDController\bin\Release\PIDController.dll");
+            type = ass.GetType("Controller.PIDController");
             con1 = type.GetConstructor(new Type[1]{typeof(IProcess)});
             dynamic tempController = con1.Invoke(new object[1]{tempLogger});
 

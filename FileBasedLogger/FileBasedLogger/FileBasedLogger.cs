@@ -10,8 +10,8 @@ namespace Log
 {
     public class FileBasedLogger : Logger
     {
-        private static readonly string inputName = @"In-FileLog.txt";
-        private static readonly string outputName = @"Out-FileLog.txt";
+        private static readonly string inputName = @"Logs\In-FileLog.txt";
+        private static readonly string outputName = @"Logs\Out-FileLog.txt";
         StreamWriter sw;
         Sequence inID;
         Sequence outID;
@@ -22,6 +22,8 @@ namespace Log
             //Szekvenciák előállítása
             inID = new Sequence(getLastIndex(inputName));
             outID = new Sequence(getLastIndex(outputName));
+            //inID = new Sequence(0);
+            //outID = new Sequence(0);
 
             inputLabels = inputLbls;
             outputLabels = outputLbls;
@@ -49,7 +51,7 @@ namespace Log
                 starter = 0;
                 using(StreamWriter sw = File.AppendText("ÜberLog.txt"))
                 {
-                    sw.WriteLine("HAHA elkaptam egy exceptiont! Nem létezett a fájl!");
+                    sw.WriteLine("{0} HAHA elkaptam egy exceptiont! Nem létezett a fájl!",DateTime.Now.ToString("YY:MM:DD HH:mm:SS"));
                     Console.WriteLine("HAHA");
                 }
             }
@@ -89,7 +91,9 @@ namespace Log
         protected override void keepUpToDate()
         {
             while(true){
-                using (sw = File.AppendText("In-FileLog.txt"))
+
+                using (sw = File.AppendText(inputName))
+                //using(sw = File.OpenWrite (inputName))
                 {
                     for (int i = 0; i < 5; i++)
                     {
@@ -102,6 +106,7 @@ namespace Log
                                 double[] tempValues = tempRec.Value;
                                 for (int j = 0; j < tempValues.Length; j++)
                                 {
+                                    
                                     sw.WriteLine(inID.get() + ";" + tempRec.TimeStamp + ";" + tempValues[j] + ";" + inputLabels[j]);
                                 }
                             }
@@ -109,7 +114,8 @@ namespace Log
                     }
                 }
 
-                using (sw = File.AppendText("Out-FileLog.txt"))
+                using (sw = File.AppendText(outputName))
+                //using(sw = new StreamWriter(outputName))
                 {
                     for (int i = 0; i < 5; i++)
                     {

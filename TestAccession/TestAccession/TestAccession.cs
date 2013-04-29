@@ -79,7 +79,7 @@ namespace Pendulum
                     tempPos += velocityAdjustmentConstant * tempGoing;
                 }
 
-                //tempPos törtrésze
+                
                 tempAngle = Math.Asin( tempPos - Math.Floor(tempPos) ) *180 / Math.PI;
 
                 lock (lockAttributes)
