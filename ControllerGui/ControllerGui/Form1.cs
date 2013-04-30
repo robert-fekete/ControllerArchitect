@@ -13,7 +13,7 @@ namespace ControllerGui
     public partial class Form1 : Form
     {
         public AssemblyPicker pck;
-        private APresenter pres; 
+        private PendulumPresenter pres; 
 
         public Form1()
         {
@@ -54,9 +54,12 @@ namespace ControllerGui
             Management.Controller.Run(pres);
         }
 
+        private double put = 0.0;
         private void button2_Click(object sender, EventArgs e)
         {
-            backgroundWorker1.CancelAsync();
+            //backgroundWorker1.CancelAsync();
+            pres.drawableRectangle1.add(put);
+            put = put + 0.3;
         }
     }
 }

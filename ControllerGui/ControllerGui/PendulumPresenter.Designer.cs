@@ -277,7 +277,7 @@
         private System.Windows.Forms.ColumnHeader headerPosition;
         private System.Windows.Forms.ColumnHeader headerInterferer;
         private System.Windows.Forms.TabPage tabPage3;
-        private DrawableRectangle drawableRectangle1;
+        public DrawableRectangle drawableRectangle1;
 
     }
 }

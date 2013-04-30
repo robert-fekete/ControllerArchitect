@@ -54,6 +54,7 @@ namespace ControllerGui
                 lineShape4.StartPoint = new System.Drawing.Point(lineX1, lineY1);
                 lineShape4.EndPoint = new System.Drawing.Point(lineX2, lineY2);
                 ovalShape1.Location = new System.Drawing.Point(lineX2 - 7, lineY2 - 7);
+                drawableRectangle1.add(values[1]);
             };
 
             //This will be true if Current thread is not UI thread.
