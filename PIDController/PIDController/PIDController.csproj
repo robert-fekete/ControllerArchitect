@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Controller\Controller\bin\Release\AController.dll</HintPath>
     </Reference>
+    <Reference Include="APresenter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\APresenter.dll</HintPath>
+    </Reference>
     <Reference Include="IProcess">
       <HintPath>..\..\dlls\IProcess.dll</HintPath>
     </Reference>

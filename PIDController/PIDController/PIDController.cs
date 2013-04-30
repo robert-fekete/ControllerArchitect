@@ -63,7 +63,7 @@ namespace Controller
         public override void Run()
         {}
 
-        public override void Run(TextBox _in)
+        public override void Run(APresenter _in)
         {
             getInput();
 
@@ -82,6 +82,9 @@ namespace Controller
             {
 
                 state = Process.get();
+                _in.updateLog(new string[]{ DateTime.Now.ToString("HH:mm:ss.fff"),state[0].ToString("f5"),state[1].ToString("f5"),""});
+                _in.updateDraw(state);
+
                 newTime = DateTime.Now.Millisecond;
                 double[] u = new double[] { 0.0 };
 
@@ -95,8 +98,6 @@ namespace Controller
                 oldTime = newTime;
                 oldError = error;
                 Thread.Sleep(50);
-
-                _in.AppendText("End");
             }
         }
 

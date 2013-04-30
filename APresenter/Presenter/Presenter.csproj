@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{497353EF-2198-4639-B630-80248DBC532F}</ProjectGuid>
+    <ProjectGuid>{020DDA3A-6089-408C-AA6A-43A8C3426537}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Controller</RootNamespace>
-    <AssemblyName>AController</AssemblyName>
+    <RootNamespace>Management</RootNamespace>
+    <AssemblyName>APresenter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,14 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="APresenter">
-      <HintPath>..\..\dlls\APresenter.dll</HintPath>
-    </Reference>
-    <Reference Include="IProcess">
-      <HintPath>..\..\IProcess\IProcess\bin\Release\IProcess.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,8 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AController.cs" />
+    <Compile Include="APresenter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="APresenter.Designer.cs">
+      <DependentUpon>APresenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="APresenter.resx">
+      <DependentUpon>APresenter.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

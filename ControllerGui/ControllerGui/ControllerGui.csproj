@@ -36,11 +36,17 @@
   <ItemGroup>
     <Reference Include="AController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PIDController\PIDController\bin\Release\AController.dll</HintPath>
+      <HintPath>..\..\dlls\AController.dll</HintPath>
+    </Reference>
+    <Reference Include="APresenter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\APresenter.dll</HintPath>
     </Reference>
     <Reference Include="IProcess">
       <HintPath>..\..\dlls\IProcess.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PIDController">
       <HintPath>..\..\PIDController\PIDController\bin\Release\PIDController.dll</HintPath>
     </Reference>
@@ -72,11 +78,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Management.cs" />
-    <Compile Include="MyUserControlls.cs">
+    <Compile Include="PendulumPresenter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MyUserControlls.Designer.cs">
-      <DependentUpon>MyUserControlls.cs</DependentUpon>
+    <Compile Include="PendulumPresenter.Designer.cs">
+      <DependentUpon>PendulumPresenter.cs</DependentUpon>
     </Compile>
     <Compile Include="PopUp.cs">
       <SubType>Form</SubType>
@@ -86,20 +92,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Chooser.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Chooser.Designer.cs">
-      <DependentUpon>Chooser.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="AssemblyPicker.resx">
       <DependentUpon>AssemblyPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyUserControlls.resx">
-      <DependentUpon>MyUserControlls.cs</DependentUpon>
+    <EmbeddedResource Include="PendulumPresenter.resx">
+      <DependentUpon>PendulumPresenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopUp.resx">
       <DependentUpon>PopUp.cs</DependentUpon>
@@ -112,10 +112,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Chooser.resx">
-      <DependentUpon>Chooser.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -125,6 +123,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cart1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

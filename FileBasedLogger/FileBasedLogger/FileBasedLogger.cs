@@ -106,8 +106,8 @@ namespace Log
                                 double[] tempValues = tempRec.Value;
                                 for (int j = 0; j < tempValues.Length; j++)
                                 {
-                                    
-                                    sw.WriteLine(inID.get() + ";" + tempRec.TimeStamp + ";" + tempValues[j] + ";" + inputLabels[j]);
+
+                                    sw.WriteLine(inID.get() + ";" + tempRec.TimeStamp.ToString("yyyy.MM.dd HH:mm:ss.fff") + ";" + tempValues[j] + ";" + inputLabels[j]);
                                 }
                             }
                         }
@@ -127,7 +127,7 @@ namespace Log
                                 double[] tempValues = tempRec.Value;
                                 for (int j = 0; j < tempValues.Length; j++)
                                 {
-                                    sw.WriteLine(outID.get() + ";" + tempRec.TimeStamp + ";" + tempValues[j] + ";" + outputLabels[0]);
+                                    sw.WriteLine(outID.get() + ";" + tempRec.TimeStamp.ToString("yyyy.MM.dd HH:mm:ss.fff") + ";" + tempValues[j] + ";" + outputLabels[0]);
                                 }
                             }
                         }

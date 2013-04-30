@@ -29,7 +29,7 @@ namespace Management
 
         public abstract void Run();
 
-        public abstract void Run(TextBox _in);
+        public abstract void Run(APresenter _in);
 
         public abstract UserControl getInterface();
     }
