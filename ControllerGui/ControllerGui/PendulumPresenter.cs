@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Management;
+using Microsoft.VisualBasic.PowerPacks;
 
 namespace ControllerGui
 {
@@ -21,7 +22,7 @@ namespace ControllerGui
             InitializeComponent();
             distance = lineShape3.StartPoint.X - lineShape2.StartPoint.X;
             length = lineShape4.EndPoint.Y - lineShape4.StartPoint.Y;
-            this.tabControl1.SelectedIndex = 1;
+            this.tabControl1.SelectedIndex = 2;
         }
 
         public override void updateLog(string[] _input)
