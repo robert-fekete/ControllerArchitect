@@ -42,12 +42,23 @@ namespace ControllerGui
 
         public override void updateDraw(double[] values)
         {
-            int cartX = lineShape2.StartPoint.X + Convert.ToInt32(values[1] / deviceDistance * distance) - 25;
+            int temp = 0;
+            try
+            {
+                temp = Convert.ToInt32((values[1] / deviceDistance) * distance);
+            }
+            catch( OverflowException) 
+            {
+                temp = 0;
+            }
+            int cartX = lineShape2.StartPoint.X + drawableRectangle1.convert((values[1] / deviceDistance) * distance) - 25;
             int lineX1 = cartX + 24;
             int lineY1 = lineShape4.StartPoint.Y;
-            int lineX2 = Convert.ToInt32(Math.Sin(values[0] / 180 * Math.PI) * length) + lineX1;
-            int lineY2 = lineY1 - Convert.ToInt32(Math.Cos(values[0] / 180 * Math.PI) * length);
 
+            int lineX2 = drawableRectangle1.convert(Math.Sin(values[0] / 180 * Math.PI) * length) + lineX1;
+
+            int lineY2 = lineY1 - drawableRectangle1.convert(Math.Cos(values[0] / 180 * Math.PI) * length);
+            
             MethodInvoker methodInvokerDelegate = delegate()
             {
                 rectangleShape2.Location = new System.Drawing.Point(cartX, rectangleShape2.Location.Y);
@@ -62,6 +73,12 @@ namespace ControllerGui
                 this.Invoke(methodInvokerDelegate);
             else
                 methodInvokerDelegate();
+        }
+
+        internal void reset()
+        {
+            listView1.Items.Clear();
+            drawableRectangle1.Clear();
         }
     }
 }

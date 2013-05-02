@@ -32,10 +32,10 @@ namespace Controller
 
             ui=new UserInterface();
 
-            ui.textBox1.Text = "2,5";     //ref
-            ui.textBox2.Text = "0,5";     //Kp
-            ui.textBox3.Text= "0,1";      //Ki
-            ui.textBox4.Text = "150,0";   //Kd
+            ui.textBox1.Text = reference.ToString();     //ref
+            ui.textBox2.Text = Kp.ToString();     //Kp
+            ui.textBox3.Text= Ki.ToString();      //Ki
+            ui.textBox4.Text = Kd.ToString();   //Kd
         }
 
         public double clap(double input)
@@ -82,7 +82,6 @@ namespace Controller
             {
 
                 state = Process.get();
-                _in.updateLog(new string[]{ DateTime.Now.ToString("HH:mm:ss.fff"),state[0].ToString("f5"),state[1].ToString("f5"),""});
                 _in.updateDraw(state);
 
                 newTime = DateTime.Now.Millisecond;
@@ -93,12 +92,20 @@ namespace Controller
                 double D = (error - oldError) / (newTime - oldTime);
 
                 u[0] = clap(clap(Kp * error) + clap(Ki * I) + clap(Kd * D));
+                if( Double.IsNaN(u[0]))
+                {
+                    u[0] = 0.0;
+                }
                 Process.set(u);
+                _in.updateLog(new string[] { DateTime.Now.ToString("HH:mm:ss.fff"), state[0].ToString("f5"),state[1].ToString("f5"), u[0].ToString("f5") });
                 
                 oldTime = newTime;
                 oldError = error;
                 Thread.Sleep(50);
             }
+
+            double[] stop = new double[] { 0.0 };
+            Process.set(stop);
         }
 
         public override UserControl getInterface()

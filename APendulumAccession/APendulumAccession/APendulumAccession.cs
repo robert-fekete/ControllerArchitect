@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Pendulum
 {
@@ -55,6 +56,10 @@ namespace Pendulum
                 {
                     temp = angle;
                 }
+                using (StreamWriter sw = File.AppendText("AngLog.txt"))
+                {
+                    sw.WriteLine("{0} ang", temp);
+                }
                 return temp;
             }
         }
@@ -67,6 +72,11 @@ namespace Pendulum
                 lock (lockAttributes)
                 {
                     temp = position;
+                }
+
+                using (StreamWriter sw = File.AppendText("PosLog.txt"))
+                {
+                    sw.WriteLine("{0} pos", temp);
                 }
                 return temp;
             }

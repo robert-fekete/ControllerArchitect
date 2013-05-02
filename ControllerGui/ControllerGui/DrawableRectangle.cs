@@ -48,6 +48,20 @@ namespace ControllerGui
             this.Controls.Add(lbl4);
         }
 
+        public int convert(double _in)
+        {
+            int temp = 0;
+            try
+            {
+                temp = Convert.ToInt32(_in);
+            }
+            catch (OverflowException)
+            {
+                temp = 0;
+            }
+            return temp;
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -103,19 +117,22 @@ namespace ControllerGui
             {
                 DateTime temp = DateTime.Now;
                 firstTime = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
-                data.Add(new Point(75, 315));
+
+                int value = 315 - convert(_in * 3 * 20.0);
+                data.Add(new Point(75, value));
             }
             else if (data.Count == 1)
             {
                 DateTime temp = DateTime.Now;
                 int time = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
                 ratio = 20.0 / (time - firstTime);
-                int t = Convert.ToInt32((time - firstTime) * ratio) + 75;
-                int value = 315 - Convert.ToInt32(_in * 3 * 20.0);
+
+                int t = convert((time - firstTime) * ratio) + 75;
+                int value = 315 - convert(_in * 3 * 20.0);
                 data.Add(new Point(t,value));
 
                 Label tempLabel = new Label();
-                tempLabel.Text = Convert.ToInt32(345 / ratio).ToString();
+                tempLabel.Text = convert(345 / ratio).ToString();
                 tempLabel.Width = 30;
                 tempLabel.Location = new System.Drawing.Point(410, 330);
                 this.Controls.Add(tempLabel);
@@ -125,25 +142,25 @@ namespace ControllerGui
             {
                 DateTime temp = DateTime.Now;
                 int time = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
-                int t = Convert.ToInt32((time - firstTime) * ratio) + 75;
-                int value = 315 - Convert.ToInt32(_in * 3 * 20.0);
+                int t = convert((time - firstTime) * ratio) + 75;
+                int value = 315 - convert(_in * 3 * 20.0);
                 data.Add(new Point(t,value));
 
                 if (data.Last<Point>().X > 415)
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
-                        data[i] = new Point(Convert.ToInt32((data[i].X-75) / 2.0) + 75,data[i].Y);
+                        data[i] = new Point(convert((data[i].X - 75) / 2.0) + 75, data[i].Y);
                     }
                     ratio = ratio / 2;
 
                     foreach (var l in labels)
                     {
-                        l.Location = new Point(Convert.ToInt32((l.Location.X-75) / 2.0) + 75,l.Location.Y);
+                        l.Location = new Point(convert((l.Location.X - 75) / 2.0) + 75, l.Location.Y);
                     }
 
                     Label tempLabel = new Label();
-                    tempLabel.Text = Convert.ToInt32(345 / ratio).ToString();
+                    tempLabel.Text = convert(345 / ratio).ToString();
                     tempLabel.Width = 40;
                     tempLabel.Location = new System.Drawing.Point(410, 330);
                     this.Controls.Add(tempLabel);
@@ -154,6 +171,13 @@ namespace ControllerGui
                 }
             }
             this.Invalidate();
+        }
+
+        public void Clear()
+        {
+            ratio = 1;
+            data.Clear();
+            labels.Clear();
         }
 
         private class Record

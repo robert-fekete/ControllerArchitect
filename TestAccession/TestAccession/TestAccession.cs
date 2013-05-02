@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.IO;
 
 namespace Pendulum
 {
@@ -42,7 +43,6 @@ namespace Pendulum
 
         public override void updateDigitalOutput()
         {
-            Console.WriteLine(Position + ((goingDir < 0)?" Balra megy":" Jobbra megy"));
 
         }
 
@@ -76,14 +76,22 @@ namespace Pendulum
                 {
                     isLeftEnd = false;
                     isRightEnd = false;
-                    tempPos += velocityAdjustmentConstant * tempGoing;
+                    if (tempGoing != 0)
+                    {
+                        tempPos += velocityAdjustmentConstant * tempGoing;
+                    }
                 }
 
-                
+                double tempValue = tempPos - Math.Floor(tempPos);
+                tempValue = tempValue >= 0 ? tempValue : -1 * tempValue;
                 tempAngle = Math.Asin( tempPos - Math.Floor(tempPos) ) *180 / Math.PI;
 
                 lock (lockAttributes)
                 {
+                    using (StreamWriter sw = File.AppendText("asssLog.txt"))
+                    {
+                        sw.WriteLine("{0} ang {1} pos", tempAngle, tempPos);
+                    }
                     position = tempPos;
                     angle = tempAngle;
                 }

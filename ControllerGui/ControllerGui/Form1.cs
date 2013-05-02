@@ -46,7 +46,11 @@ namespace ControllerGui
 
         private void button1_Click(object sender, EventArgs e)
         {
-            backgroundWorker1.RunWorkerAsync();
+            if (backgroundWorker1.IsBusy == false)
+            {
+                pres.reset();
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -54,12 +58,9 @@ namespace ControllerGui
             Management.Controller.Run(pres);
         }
 
-        private double put = 0.0;
         private void button2_Click(object sender, EventArgs e)
         {
-            //backgroundWorker1.CancelAsync();
-            pres.drawableRectangle1.add(put);
-            put = put + 0.3;
+            backgroundWorker1.CancelAsync();
         }
     }
 }

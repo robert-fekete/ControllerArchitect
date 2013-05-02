@@ -15,10 +15,5 @@ namespace Controller
         {
             InitializeComponent();
         }
-
-        public void log(string _input)
-        {
-            textBox1.AppendText(_input);
-        }
     }
 }

@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="APendulumAccession">
-      <HintPath>..\..\APendulumAccession\APendulumAccession\bin\Release\APendulumAccession.dll</HintPath>
+    <Reference Include="APendulumAccession, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\APendulumAccession.dll</HintPath>
     </Reference>
     <Reference Include="ModulConnection">
       <HintPath>..\..\ModulConnection\ModulConnection\bin\Release\ModulConnection.dll</HintPath>
