@@ -10,20 +10,20 @@ namespace Log
 {
     public class FileBasedLogger : Logger
     {
-        private static readonly string inputName = @"Logs\In-FileLog.txt";
-        private static readonly string outputName = @"Logs\Out-FileLog.txt";
-        StreamWriter sw;
-        Sequence inID;
-        Sequence outID;
-        Thread Logging;
+        public static string inputName = @"Logs\In-FileLog.txt";
+        public static string outputName = @"Logs\Out-FileLog.txt";
+        private StreamWriter sw;
+        private Sequence inID;
+        private Sequence outID;
+        private Thread Logging;
 
         public FileBasedLogger(IProcess _Process,string[] inputLbls, string[]outputLbls) : base(_Process)
         {
             //Szekvenciák előállítása
             inID = new Sequence(getLastIndex(inputName));
             outID = new Sequence(getLastIndex(outputName));
-            //inID = new Sequence(0);
-            //outID = new Sequence(0);
+            inputName = System.IO.Path.ChangeExtension(@"Logs\IN_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
+            outputName = System.IO.Path.ChangeExtension(@"Logs\OUT_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
 
             inputLabels = inputLbls;
             outputLabels = outputLbls;
@@ -49,10 +49,26 @@ namespace Log
             catch (FileNotFoundException fnfe)
             {
                 starter = 0;
-                using(StreamWriter sw = File.AppendText("ÜberLog.txt"))
+                using (StreamWriter sw = File.AppendText("MainLog.txt"))
                 {
-                    sw.WriteLine("{0} HAHA elkaptam egy exceptiont! Nem létezett a fájl!",DateTime.Now.ToString("YY:MM:DD HH:mm:SS"));
-                    Console.WriteLine("HAHA");
+                    sw.WriteLine("{0} FileNotFound: {1}", DateTime.Now.ToString("yy:MM:dd HH:mm:ss"),fnfe.Message);
+                }
+            }
+            catch (DirectoryNotFoundException dnfe)
+            {
+                starter = 0;
+                using (StreamWriter sw = File.AppendText("MainLog.txt"))
+                {
+                    sw.WriteLine("{0} DirectoryNotFound: {1}", DateTime.Now.ToString("yy:MM:dd HH:mm:ss"), dnfe.Message);
+                }
+                System.IO.Directory.CreateDirectory(@"Logs");
+            }
+            catch (Exception e)
+            {
+                starter = 0;
+                using (StreamWriter sw = File.AppendText("MainLog.txt"))
+                {
+                    sw.WriteLine("{0} Unexpected Exception: {1}", DateTime.Now.ToString("yy:MM:dd HH:mm:ss"), e.Message);
                 }
             }
             return starter;

@@ -48,5 +48,13 @@ namespace Pendulum
             get();
             return new double[] { accession.Angle, accession.Position };
         }
+
+
+
+        public override APresenter getPresenter()
+        {
+            //throw new NotImplementedException();
+            return new PendulumPresenter();
+        }
     }
 }

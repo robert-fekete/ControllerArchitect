@@ -1,4 +1,4 @@
-﻿namespace ControllerGui
+﻿namespace Pendulum
 {
     partial class PendulumPresenter
     {
@@ -47,7 +47,7 @@
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.drawableRectangle1 = new ControllerGui.DrawableRectangle();
+            this.drawableRectangle1 = new Pendulum.DrawableRectangle();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -182,7 +182,7 @@
             // 
             // rectangleShape2
             // 
-            this.rectangleShape2.BackgroundImage = global::ControllerGui.Properties.Resources.cart1;
+            this.rectangleShape2.BackgroundImage = global::ModulConnection.Properties.Resources.cart;
             this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
             this.rectangleShape2.Location = new System.Drawing.Point(196, 220);
             this.rectangleShape2.Name = "rectangleShape2";

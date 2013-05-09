@@ -10,14 +10,12 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
 
-            Console.WriteLine(Double.NaN);
+            Console.WriteLine(System.IO.Path.ChangeExtension(System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()),"txt") );
             Console.WriteLine(Double.NegativeInfinity);
             Console.WriteLine(Double.PositiveInfinity);
             Console.WriteLine(Double.Epsilon );
             Console.WriteLine(Double.MinValue);
             Console.WriteLine(Double.MaxValue);
-            int zero = 0;
-            Console.WriteLine( 0/ zero);
         }
     }
 }

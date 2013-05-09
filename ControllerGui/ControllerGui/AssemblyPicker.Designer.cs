@@ -95,6 +95,7 @@
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(416, 229);
             this.checkedListBox1.TabIndex = 1;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // button2
             // 
@@ -134,6 +135,7 @@
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(416, 229);
             this.checkedListBox2.TabIndex = 4;
+            this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.checkedListBox2_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -173,6 +175,7 @@
             this.checkedListBox3.Name = "checkedListBox3";
             this.checkedListBox3.Size = new System.Drawing.Size(416, 229);
             this.checkedListBox3.TabIndex = 4;
+            this.checkedListBox3.SelectedIndexChanged += new System.EventHandler(this.checkedListBox3_SelectedIndexChanged);
             // 
             // button4
             // 
@@ -212,6 +215,7 @@
             this.checkedListBox4.Name = "checkedListBox4";
             this.checkedListBox4.Size = new System.Drawing.Size(416, 229);
             this.checkedListBox4.TabIndex = 4;
+            this.checkedListBox4.SelectedIndexChanged += new System.EventHandler(this.checkedListBox4_SelectedIndexChanged);
             // 
             // button5
             // 

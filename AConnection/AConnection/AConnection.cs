@@ -25,5 +25,7 @@ namespace Pendulum
         {
             return outputLabels;
         }
+
+        public abstract Management.APresenter getPresenter(); 
     }
 }

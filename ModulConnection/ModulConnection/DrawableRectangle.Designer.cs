@@ -1,4 +1,4 @@
-﻿namespace ControllerGui
+﻿namespace Pendulum
 {
     partial class DrawableRectangle
     {

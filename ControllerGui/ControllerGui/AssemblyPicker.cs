@@ -8,27 +8,48 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using Controller;
+using System.Reflection;
+using System.IO;
+using Management;
 
 namespace ControllerGui
 {
     public partial class AssemblyPicker : UserControl
     {
-        private static readonly string defaultFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        private static readonly string defaultPickFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\PIDController\PIDController\bin\Release";
+        public static string defaultControllerFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
+        public static string defaultLoggerFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
+        public static string defaultConnectionFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
+        public static string defaultAccessionFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
+        public static string defaultPickFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\PIDController\PIDController\bin\Release";
         private Form1 owner;
-        
+
         public AssemblyPicker(Form1 _owner)
         {
             owner = _owner;
 
             InitializeComponent();
-            
+
             openFileDialog1.InitialDirectory = defaultPickFolder;
             openFileDialog1.Title = "Choose some additional assemblies...";
 
-            System.IO.DirectoryInfo defDir = new System.IO.DirectoryInfo(defaultFolder);
+            refreshLists();
+        }
 
-            System.IO.FileInfo[] dlls = defDir.GetFiles("*Controller.dll");
+        public void refreshLists()
+        {
+            checkedListBox1.Items.Clear();
+            checkedListBox2.Items.Clear();
+            checkedListBox3.Items.Clear();
+            checkedListBox4.Items.Clear();
+
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+
+            System.IO.DirectoryInfo defDir = new System.IO.DirectoryInfo(defaultControllerFolder);
+
+            System.IO.FileInfo[] dlls = defDir.GetFiles("*Controller*");
             foreach (var file in dlls)
             {
                 if (file.Name != "AController.dll")
@@ -36,14 +57,18 @@ namespace ControllerGui
             }
             checkedListBox1.ItemCheck += CheckedListBox1_ItemCheck;
 
-            dlls = defDir.GetFiles("*Logger.dll");
+            defDir = new System.IO.DirectoryInfo(defaultLoggerFolder);
+
+            dlls = defDir.GetFiles("*Logger*");
             foreach (var file in dlls)
             {
                 checkedListBox2.Items.Add(new AssemblyItem(file.FullName, file.Name));
             }
             checkedListBox2.ItemCheck += CheckedListBox2_ItemCheck;
 
-            dlls = defDir.GetFiles("*Connection.dll");
+            defDir = new System.IO.DirectoryInfo(defaultConnectionFolder);
+
+            dlls = defDir.GetFiles("*Connection*");
             foreach (var file in dlls)
             {
                 if (file.Name != "AConnection.dll")
@@ -51,7 +76,9 @@ namespace ControllerGui
             }
             checkedListBox3.ItemCheck += CheckedListBox3_ItemCheck;
 
-            dlls = defDir.GetFiles("*Accession.dll");
+            defDir = new System.IO.DirectoryInfo(defaultAccessionFolder);
+
+            dlls = defDir.GetFiles("*Accession*");
             foreach (var file in dlls)
             {
                 checkedListBox4.Items.Add(new AssemblyItem(file.FullName, file.Name));
@@ -66,12 +93,12 @@ namespace ControllerGui
             string[] name = openFileDialog1.SafeFileNames;
             for (int i = 0; i < path.Length; i++)
             {
-                if(name[i].Contains("Controller.dll") && !name[i].Contains("AController.dll"))
+                if (name[i].Contains("Controller") && !name[i].Contains("AController.dll"))
                 {
                     bool has = false;
-                    foreach (var item in checkedListBox1.Items)
+                    foreach (AssemblyItem item in checkedListBox1.Items)
                     {
-                        if (item.ToString().CompareTo(name[i]) == 0)
+                        if (item.Path.CompareTo(path[i]) == 0)
                         {
                             has = true;
                         }
@@ -110,9 +137,9 @@ namespace ControllerGui
                 if (name[i].Contains("Logger.dll"))
                 {
                     bool has = false;
-                    foreach (var item in checkedListBox2.Items)
+                    foreach (AssemblyItem item in checkedListBox1.Items)
                     {
-                        if (item.ToString().CompareTo(name[i]) == 0)
+                        if (item.Path.CompareTo(path[i]) == 0)
                         {
                             has = true;
                         }
@@ -148,12 +175,12 @@ namespace ControllerGui
             string[] name = openFileDialog1.SafeFileNames;
             for (int i = 0; i < path.Length; i++)
             {
-                if (name[i].Contains("Connection.dll") && !name[i].Contains("AConnection.dll"))
+                if (name[i].Contains("Connection") && !name[i].Contains("AConnection.dll"))
                 {
                     bool has = false;
-                    foreach (var item in checkedListBox3.Items)
+                    foreach (AssemblyItem item in checkedListBox1.Items)
                     {
-                        if (item.ToString().CompareTo(name[i]) == 0)
+                        if (item.Path.CompareTo(path[i]) == 0)
                         {
                             has = true;
                         }
@@ -192,9 +219,9 @@ namespace ControllerGui
                 if (name[i].Contains("Accession.dll"))
                 {
                     bool has = false;
-                    foreach (var item in checkedListBox4.Items)
+                    foreach (AssemblyItem item in checkedListBox1.Items)
                     {
-                        if (item.ToString().CompareTo(name[i]) == 0)
+                        if (item.Path.CompareTo(path[i]) == 0)
                         {
                             has = true;
                         }
@@ -225,16 +252,101 @@ namespace ControllerGui
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UserControl temp = Management.Controller.getInterface();
-            owner.controllerSelected(temp);
+            UserControl tempUI = Management.Controller.getInterface();
+            APresenter tempPres = Management.getPresenter();
+            owner.controllerSelected(tempUI,tempPres);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (Management.InitSession(this))
+            if (Management.InitSession(this.owner))
             {
                 button1.Enabled = true;
             }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBox1.SelectedItem != null)
+            {
+                description(((AssemblyItem)checkedListBox1.SelectedItem).Path);
+            }
+        }
+
+        private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBox2.SelectedItem != null)
+            {
+                description(((AssemblyItem)checkedListBox2.SelectedItem).Path);
+            }
+        }
+
+        private void checkedListBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBox3.SelectedItem != null)
+            {
+                description(((AssemblyItem)checkedListBox3.SelectedItem).Path);
+            }
+        }
+
+        private void checkedListBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBox4.SelectedItem != null)
+            {
+                description(((AssemblyItem)checkedListBox4.SelectedItem).Path);
+            }
+        }
+
+        private void description(string inputPath){
+            owner.groupBox2.Text = "Description";
+            owner.textBox1.Text = "";
+            owner.pictureBox1.Image = null;
+
+            Assembly _assembly = null;
+            Stream _imageStream = null;
+            StreamReader _textStreamReader = null;
+            try
+            {
+                _assembly = Assembly.LoadFrom(inputPath);
+            }
+            catch
+            {
+                return;
+            }
+            try
+            {
+                _imageStream = _assembly.GetManifestResourceStream("Pendulum.Picture.bmp");
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Pendulum.Description.txt"));
+            }
+            catch
+            {
+                owner.textBox1.Text = "There is no description for the assembly.";
+            }
+
+            if (_imageStream != null)
+            {
+                owner.pictureBox1.Image = new Bitmap(_imageStream);
+            }
+            if (_textStreamReader != null)
+            {
+
+                while (_textStreamReader.Peek() > -1)
+                {
+                    owner.textBox1.AppendText(_textStreamReader.ReadLine());
+                    owner.textBox1.AppendText("\n");
+                }
+            }
+            else
+            {
+                owner.textBox1.Text = "There is no description for the assembly.";
+            }           
         }
     }
 }

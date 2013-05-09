@@ -8,7 +8,7 @@
     <ProjectGuid>{30EB4FC3-303E-427E-A127-23D29A024116}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestAccession</RootNamespace>
+    <RootNamespace>Pendulum</RootNamespace>
     <AssemblyName>TestAccession</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +49,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAccession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Description.txt" />
+    <EmbeddedResource Include="Picture.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Namespace.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 
-namespace ControllerGui
+namespace Pendulum
 {
     public partial class DrawableRectangle : UserControl
     {
@@ -46,20 +45,6 @@ namespace ControllerGui
             lbl4.Location = new System.Drawing.Point(58, 68);
             lbl4.Text = "4";
             this.Controls.Add(lbl4);
-        }
-
-        public int convert(double _in)
-        {
-            int temp = 0;
-            try
-            {
-                temp = Convert.ToInt32(_in);
-            }
-            catch (OverflowException)
-            {
-                temp = 0;
-            }
-            return temp;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -102,7 +87,7 @@ namespace ControllerGui
 
             if (data.Count >= 2)
             {
-                e.Graphics.DrawCurve(Pens.Red, data.ToArray<Point>());
+                e.Graphics.DrawCurve(Pens.Red, data.ToArray());
             }
 
 
@@ -118,7 +103,7 @@ namespace ControllerGui
                 DateTime temp = DateTime.Now;
                 firstTime = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
 
-                int value = 315 - convert(_in * 3 * 20.0);
+                int value = 315 - Convert.ToInt32(_in * 3 * 20.0);
                 data.Add(new Point(75, value));
             }
             else if (data.Count == 1)
@@ -127,12 +112,12 @@ namespace ControllerGui
                 int time = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
                 ratio = 20.0 / (time - firstTime);
 
-                int t = convert((time - firstTime) * ratio) + 75;
-                int value = 315 - convert(_in * 3 * 20.0);
+                int t = Convert.ToInt32((time - firstTime) * ratio) + 75;
+                int value = 315 - Convert.ToInt32(_in * 3 * 20.0);
                 data.Add(new Point(t,value));
 
                 Label tempLabel = new Label();
-                tempLabel.Text = convert(345 / ratio).ToString();
+                tempLabel.Text = Convert.ToInt32(345 / ratio).ToString();
                 tempLabel.Width = 30;
                 tempLabel.Location = new System.Drawing.Point(410, 330);
                 this.Controls.Add(tempLabel);
@@ -142,25 +127,31 @@ namespace ControllerGui
             {
                 DateTime temp = DateTime.Now;
                 int time = ((temp.Minute * 60) + temp.Second) * 1000 + temp.Millisecond;
-                int t = convert((time - firstTime) * ratio) + 75;
-                int value = 315 - convert(_in * 3 * 20.0);
+                int t = Convert.ToInt32((time - firstTime) * ratio) + 75;
+                int value = 315 - Convert.ToInt32(_in * 3 * 20.0);
                 data.Add(new Point(t,value));
 
-                if (data.Last<Point>().X > 415)
+                Point last = new Point();
+
+                foreach (var point in data)
+	            {
+		            last = point;
+	            }
+                if (last.X > 415)
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
-                        data[i] = new Point(convert((data[i].X - 75) / 2.0) + 75, data[i].Y);
+                        data[i] = new Point(Convert.ToInt32((data[i].X - 75) / 2.0) + 75, data[i].Y);
                     }
                     ratio = ratio / 2;
 
                     foreach (var l in labels)
                     {
-                        l.Location = new Point(convert((l.Location.X - 75) / 2.0) + 75, l.Location.Y);
+                        l.Location = new Point(Convert.ToInt32((l.Location.X - 75) / 2.0) + 75, l.Location.Y);
                     }
 
                     Label tempLabel = new Label();
-                    tempLabel.Text = convert(345 / ratio).ToString();
+                    tempLabel.Text = Convert.ToInt32(345 / ratio).ToString();
                     tempLabel.Width = 40;
                     tempLabel.Location = new System.Drawing.Point(410, 330);
                     this.Controls.Add(tempLabel);

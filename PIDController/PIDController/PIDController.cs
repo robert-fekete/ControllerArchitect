@@ -55,6 +55,9 @@ namespace Controller
         private void getInput()
         {
             reference = Convert.ToDouble(ui.textBox1.Text);
+            reference = reference < 0 ? 0 : reference;
+            reference = reference > 5 ? 5 : reference;
+            ui.textBox1.Text = reference.ToString();
             Kp = Convert.ToDouble(ui.textBox2.Text);
             Ki = Convert.ToDouble(ui.textBox3.Text);
             Kd = Convert.ToDouble(ui.textBox4.Text);
