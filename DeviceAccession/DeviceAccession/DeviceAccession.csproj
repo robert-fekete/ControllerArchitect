@@ -8,7 +8,7 @@
     <ProjectGuid>{12AC9DF4-95B5-4CF2-8250-680E491E5202}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeviceAccession</RootNamespace>
+    <RootNamespace>Pendulum</RootNamespace>
     <AssemblyName>DeviceAccession</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -33,10 +33,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="APendulumAccession">
-      <HintPath>..\..\APendulumAccession\APendulumAccession\bin\Release\APendulumAccession.dll</HintPath>
+      <HintPath>..\..\dlls\APendulumAccession.dll</HintPath>
     </Reference>
-    <Reference Include="ModulConnection">
-      <HintPath>..\..\ModulConnection\ModulConnection\bin\Release\ModulConnection.dll</HintPath>
+    <Reference Include="NationalInstruments.Common">
+      <HintPath>..\NationalInstruments.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.Common.Native">
+      <HintPath>..\NationalInstruments.Common.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.DAQmx">
+      <HintPath>..\NationalInstruments.DAQmx.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.DAQmx.ComponentModel">
+      <HintPath>..\NationalInstruments.DAQmx.ComponentModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -45,6 +54,11 @@
   <ItemGroup>
     <Compile Include="DeviceAccession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Description.txt" />
+    <EmbeddedResource Include="Namespace.txt" />
+    <EmbeddedResource Include="Picture.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

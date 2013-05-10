@@ -17,7 +17,7 @@ namespace Pendulum
         protected double position;
         protected object lockAttributes;
     
-        public abstract double[,] updateAnalogInput();
+        public abstract double[] updateAnalogInput();
 
         public abstract bool[,] updateDigitalInput();
 

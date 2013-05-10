@@ -353,10 +353,11 @@ namespace ControllerGui
                         return false;
                     }
                 }
-                catch
+                catch (Exception e)
                 {
                     owner.groupBox2.Text = "Error";
                     owner.textBox1.Text = "The Logger assembly doesn't contain any class named: " + typeName;
+                    
                     return false;
                 }
                 try

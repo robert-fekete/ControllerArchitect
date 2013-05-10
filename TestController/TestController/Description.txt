@@ -1,0 +1,2 @@
+﻿A simple controller.
+Goes left if the current position is smaller than the reference, and goes right if it is bigger.

@@ -17,7 +17,7 @@ namespace Controller
         private double Kp;
         private double Ki;
         private double Kd;
-        private bool run;
+        private bool run = true;
 
         private double I;
         private long oldTime;
@@ -68,7 +68,6 @@ namespace Controller
             reference = Convert.ToDouble(ui.textBox1.Text);
             reference = reference < 0 ? 0 : reference;
             reference = reference > 5 ? 5 : reference;
-            ui.textBox1.Text = reference.ToString();
             Kp = Convert.ToDouble(ui.textBox2.Text);
             Ki = Convert.ToDouble(ui.textBox3.Text);
             Kd = Convert.ToDouble(ui.textBox4.Text);
@@ -79,6 +78,7 @@ namespace Controller
          * */
         public override void Run(APresenter _in)
         {
+            run = true;
             getInput();
 
             // state[0] - Angle
@@ -120,7 +120,9 @@ namespace Controller
                 
                 oldTime = newTime;
                 oldError = error;
-                Thread.Sleep(50);
+
+                Thread.Sleep(25);
+                state = Process.get();
             }
 
             double[] stop = new double[] { 0.0 };

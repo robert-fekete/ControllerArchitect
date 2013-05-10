@@ -24,7 +24,7 @@ namespace Log
         // Külön szálon megy a naplózás
         private Thread Logging;
 
-        public FileBasedLogger(IProcess _Process,string[] inputLbls, string[]outputLbls) : base(_Process)
+        public FileBasedLogger(IProcess _Process,string[] inputLbls, string[]outputLbls) : base(_Process,inputLbls,outputLbls)
         {
             //Szekvenciák előállítása
             inID = new Sequence(getLastIndex(inputName));
@@ -33,9 +33,6 @@ namespace Log
             // Random nevet generál a log fájlnak
             inputName = System.IO.Path.ChangeExtension(@"Logs\IN_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
             outputName = System.IO.Path.ChangeExtension(@"Logs\OUT_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
-
-            inputLabels = inputLbls;
-            outputLabels = outputLbls;
 
             Logging = new Thread(keepUpToDate);
             Logging.IsBackground = true;

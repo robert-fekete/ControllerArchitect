@@ -41,9 +41,13 @@ namespace Log
             }
         }
 
-        public Logger(IProcess _Process)
+        public Logger(IProcess _Process, string[] inputLbls, string[] outputLbls)
         {
             process = _Process;
+
+            inputLabels = inputLbls;
+            outputLabels = outputLbls;
+
             FIFOInput = new ConcurrentQueue<LogRecord>();
             FIFOOutput = new ConcurrentQueue<LogRecord>();
         }

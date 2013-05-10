@@ -1,0 +1,1 @@
+﻿An empty logger for testing transparency

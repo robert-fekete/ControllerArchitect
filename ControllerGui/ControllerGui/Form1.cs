@@ -53,30 +53,42 @@ namespace ControllerGui
          */
         private void restoreConfigs()
         {
-            string[] config = System.IO.File.ReadAllLines(@"Config\config");
-            foreach (var s in config)
+            string[] config;
+            try
             {
-                string[] temp = s.Split(new char[] { ':' },2) ;
-                if (temp[0] == "Controller" && temp[1] != "")
+                config = System.IO.File.ReadAllLines(@"Config\config");
+                foreach (var s in config)
                 {
-                    AssemblyPicker.defaultControllerFolder = temp[1];
+                    string[] temp = s.Split(new char[] { ':' },2) ;
+                    if (temp[0] == "Controller" && temp[1] != "")
+                    {
+                        AssemblyPicker.defaultControllerFolder = temp[1];
+                    }
+                    else if (temp[0] == "Logger" && temp[1] != "")
+                    {
+                        AssemblyPicker.defaultLoggerFolder = temp[1];
+                    }
+                    else if (temp[0] == "Connection" && temp[1] != "")
+                    {
+                        AssemblyPicker.defaultConnectionFolder = temp[1];
+                    }
+                    else if (temp[0] == "Accession" && temp[1] != "")
+                    {
+                        AssemblyPicker.defaultAccessionFolder = temp[1];
+                    }
+                    else if (temp[0] == "Browse" && temp[1] != "")
+                    {
+                        AssemblyPicker.defaultPickFolder = temp[1];
+                    }
                 }
-                else if (temp[0] == "Logger" && temp[1] != "")
-                {
-                    AssemblyPicker.defaultLoggerFolder = temp[1];
-                }
-                else if (temp[0] == "Connection" && temp[1] != "")
-                {
-                    AssemblyPicker.defaultConnectionFolder = temp[1];
-                }
-                else if (temp[0] == "Accession" && temp[1] != "")
-                {
-                    AssemblyPicker.defaultAccessionFolder = temp[1];
-                }
-                else if (temp[0] == "Browse" && temp[1] != "")
-                {
-                    AssemblyPicker.defaultPickFolder = temp[1];
-                }
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Directory.CreateDirectory(@"Config");
+            }
+            catch (FileNotFoundException)
+            {
+                File.Create(@"Config\config");
             }
         }
         /**
@@ -106,7 +118,7 @@ namespace ControllerGui
             this.groupBox1.Controls.Add(UI);
             groupBox1.Text = "Controller";
 
-            groupBox2.Dispose();
+            groupBox2.Hide();
             pres = _inputPres;
             pres.Location = new System.Drawing.Point(10, 0);
             this.splitContainer1.Panel2.Controls.Add(pres);
@@ -135,16 +147,23 @@ namespace ControllerGui
          */
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            Management.Controller.Run(pres);
+            if (Management.Controller != null)
+            {
+                Management.Controller.Run(pres);
+            }
         }
 
         /**
-         * Cancel gomb listener-e
+         * Stop gomb listener-e
          * Leállítja a háttérszál működését
          * */
         private void button2_Click(object sender, EventArgs e)
         {
             backgroundWorker1.CancelAsync();
+            if (Management.Controller != null)
+            {
+                Management.Controller.Stop();
+            }
         }
 
         /**
@@ -163,7 +182,9 @@ namespace ControllerGui
         {
             UI.Dispose();
             Management.Clear();
+            pres.Dispose();
             newPicker();
+            groupBox2.Show();
             runnable = false;
         }
 
@@ -179,7 +200,7 @@ namespace ControllerGui
             }
             using (StreamWriter sw = new System.IO.StreamWriter(@"Config\config"))
             {
-                sw.WriteLine("Controller:{0}", AssemblyPicker.defaultControllerFolder);
+                sw.WriteLine("Controller:{0}", AssemblyPicker.defaultControllerFolder );
                 sw.WriteLine("Logger:{0}", AssemblyPicker.defaultLoggerFolder);
                 sw.WriteLine("Connection:{0}", AssemblyPicker.defaultConnectionFolder);
                 sw.WriteLine("Accession:{0}", AssemblyPicker.defaultAccessionFolder);

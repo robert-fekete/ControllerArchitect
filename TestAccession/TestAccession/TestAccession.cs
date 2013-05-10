@@ -31,9 +31,9 @@ namespace Pendulum
         /**
          * Interface egyezés miatt
          * */
-        public override double[,] updateAnalogInput()
+        public override double[] updateAnalogInput()
         {
-            return new double[1,2] { {angle,position} };
+            return new double[]{angle,position};
 
         }
 
@@ -101,7 +101,7 @@ namespace Pendulum
                     angle = tempAngle;
                 }
 
-                Thread.Sleep(25);
+                Thread.Sleep(50);
             }
             
 

@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-/*
 using NationalInstruments.DAQmx;
-*/
+
+
+/**
+ * Referenciának meg kell adni:
+ * 
+ * NationalInstruments.DAQmx;
+ * NationalInstruments.DAQmx.ComponentModel
+ * NationalInstruments.Common;
+ * NationalInstruments.Common.Native;
+ * */
 
 namespace Pendulum
 {
+    /**
+     * A fizikai eszközhöz való hozzáférést biztosító osztály
+     * */
     public class DeviceAccession : APendulumAccession
     {
-        /*
+        
         private Device DAQ;
 
         private Task ditask;
@@ -28,24 +38,18 @@ namespace Pendulum
         private AnalogMultiChannelReader anreader;
         private AIChannel chAngle;
         private AIChannel chPosition;
-        */
+        
 
         public DeviceAccession()
         {
             //Az attributumok elérésénél a lockhoz a szinkronizációs objektum
             lockAttributes = new object();
-
-            //Kiírás, a függvény működésének észleléséhez
-            Console.WriteLine("Konstruktor");
-
-            /*
-            //Ha ez a két sor nem volt kikommentezve, akkor már a felettük lévő "Konstruktort" se írta ki
+              
+            
             DAQ = DaqSystem.Local.LoadDevice("Dev1");
             DAQ.SelfCalibrate();
-             * 
-             * */
-
-            /*ditask = new Task();
+             
+            ditask = new Task();
             dotask = new Task();
             aitask = new Task();
 
@@ -58,8 +62,6 @@ namespace Pendulum
             chAngle = aitask.AIChannels.CreateVoltageChannel("Dev1/ai0", "Angle", AITerminalConfiguration.Rse, -10, 10, AIVoltageUnits.Volts);
             chPosition = aitask.AIChannels.CreateVoltageChannel("Dev1/ai1", "Position", AITerminalConfiguration.Rse, -10, 10, AIVoltageUnits.Volts);
 
-
-
             ditask.Start();
             dotask.Start();
             aitask.Start();
@@ -67,56 +69,36 @@ namespace Pendulum
             digreader = new DigitalMultiChannelReader(ditask.Stream);
             digwriter = new DigitalMultiChannelWriter(dotask.Stream);
             anreader = new AnalogMultiChannelReader(aitask.Stream);
-            */
+            
         }
-
-        /*private void updateDevice()
+        
+        public override double[] updateAnalogInput()
         {
-            throw new System.NotImplementedException();
-        }*/
-
-        public override double[,] updateAnalogInput()
-        {
-            Console.WriteLine("update anaglo input");
-            /*
             double[] temp = anreader.ReadSingleSample();
             angle = temp[0];
             position = temp[1];
 
             return temp;
-             * */
-
-            //Értelmetlen visszatérési érték, pusztán a fordítási hiba elkerülése miatt van rá szükség
-            return new double[1,1];
         }
 
         public override bool[,] updateDigitalInput()
         {
-            Console.WriteLine("update digital input");
-            /*
             bool[,] ends = digreader.ReadSingleSampleMultiLine();
             isLeftEnd = !ends[0, 0];
             isRightEnd = !ends[1, 0];
 
             return ends;
-             * */
-
-            //Értelmetlen visszatérési érték, pusztán a fordítási hiba elkerülése miatt van rá szükség
-            return new bool[1, 1];
+            
         }
 
         public override void updateDigitalOutput()
         {
-            Console.WriteLine("update digital outpu");
-            /*
             bool isGoingLeft = goingDir < 0;
             bool isGoingRight = goingDir > 0;
             bool[,] data = new bool[2, 1];
             data[0, 0] = isGoingLeft;
             data[1, 0] = isGoingRight;
             digwriter.WriteSingleSampleMultiLine(true, data);
-             * */
         }
-        
     }
 }

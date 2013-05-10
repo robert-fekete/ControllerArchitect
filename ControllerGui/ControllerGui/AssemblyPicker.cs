@@ -20,11 +20,11 @@ namespace ControllerGui
     public partial class AssemblyPicker : UserControl
     {
         // A listák betöltésének induló könyvtárai
-        public static string defaultControllerFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        public static string defaultLoggerFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        public static string defaultConnectionFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        public static string defaultAccessionFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\dlls\";
-        public static string defaultPickFolder = @"D:\C#\users\roberto\documents\visual studio 2010\Projects\ControllerArchitect\PIDController\PIDController\bin\Release";
+        public static string defaultControllerFolder = System.IO.Directory.GetCurrentDirectory() + @"\bin";
+        public static string defaultLoggerFolder = System.IO.Directory.GetCurrentDirectory() + @"\bin";
+        public static string defaultConnectionFolder = System.IO.Directory.GetCurrentDirectory() + @"\bin";
+        public static string defaultAccessionFolder = System.IO.Directory.GetCurrentDirectory() + @"\bin";
+        public static string defaultPickFolder = System.IO.Directory.GetCurrentDirectory() + @"\bin";
         private Form1 owner;
 
         public AssemblyPicker(Form1 _owner)
@@ -55,15 +55,23 @@ namespace ControllerGui
             textBox4.Text = "";
 
             System.IO.DirectoryInfo defDir = new System.IO.DirectoryInfo(defaultControllerFolder);
+            System.IO.FileInfo[] dlls;
 
-            // Betölti azokat a fájlokat, amelyek nevében szerepel a Controller szó
-            System.IO.FileInfo[] dlls = defDir.GetFiles("*Controller*");
-
-            // Ha nem az abstract ősosztály, akkor hozzáadja a listához
-            foreach (var file in dlls)
+            if (defDir.Exists == true)
             {
-                if (file.Name != "AController.dll")
-                    checkedListBox1.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                // Betölti azokat a fájlokat, amelyek nevében szerepel a Controller szó
+                dlls = defDir.GetFiles("*Controller*");
+
+                // Ha nem az abstract ősosztály, akkor hozzáadja a listához
+                foreach (var file in dlls)
+                {
+                    if (file.Name != "AController.dll")
+                        checkedListBox1.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                }
+            }
+            else
+            {
+                defDir.Create();
             }
 
             // Listener regisztrálása
@@ -71,11 +79,19 @@ namespace ControllerGui
 
             defDir = new System.IO.DirectoryInfo(defaultLoggerFolder);
 
-            dlls = defDir.GetFiles("*Logger*");
-            foreach (var file in dlls)
+            if (defDir.Exists == true)
             {
-                if (file.Name != "ALogger.dll")
-                    checkedListBox2.Items.Add(new AssemblyItem(file.FullName, file.Name));
+
+                dlls = defDir.GetFiles("*Logger*");
+                foreach (var file in dlls)
+                {
+                    if (file.Name != "ALogger.dll")
+                        checkedListBox2.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                }
+            }
+            else
+            {
+                defDir.Create();
             }
 
             // Listener regisztrálása
@@ -83,11 +99,18 @@ namespace ControllerGui
 
             defDir = new System.IO.DirectoryInfo(defaultConnectionFolder);
 
-            dlls = defDir.GetFiles("*Connection*");
-            foreach (var file in dlls)
+            if (defDir.Exists == true)
             {
-                if (file.Name != "AConnection.dll")
-                    checkedListBox3.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                dlls = defDir.GetFiles("*Connection*");
+                foreach (var file in dlls)
+                {
+                    if (file.Name != "AConnection.dll")
+                        checkedListBox3.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                }
+            }
+            else
+            {
+                defDir.Create();
             }
 
             // Listener regisztrálása
@@ -95,11 +118,18 @@ namespace ControllerGui
 
             defDir = new System.IO.DirectoryInfo(defaultAccessionFolder);
 
-            dlls = defDir.GetFiles("*Accession*");
-            foreach (var file in dlls)
+            if (defDir.Exists == true)
             {
-                if (file.Name != "APendulumAccession.dll")
-                    checkedListBox4.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                dlls = defDir.GetFiles("*Accession*");
+                foreach (var file in dlls)
+                {
+                    if (file.Name != "APendulumAccession.dll")
+                        checkedListBox4.Items.Add(new AssemblyItem(file.FullName, file.Name));
+                }
+            }
+            else
+            {
+                defDir.Create();
             }
 
             // Listener regisztrálása
