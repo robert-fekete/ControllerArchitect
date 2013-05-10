@@ -1,0 +1,7 @@
+﻿PendulumModulConnection is providing the standard IProcess interface, and and access to a pendulum.
+It is covering the differences of the device, so it can be a simulation, or a physical device.
+
+There is three tab of presenter for it:
+Log: A logging area for the most important data.
+Animation: An animated pendulum which shows the current state of the pendulum.
+Graph: A graph which shows the time function of the controlled value.

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModulConnection", "ModulConnection\ModulConnection.csproj", "{511DFA3A-40E4-4F97-AA53-FE3E837909F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PendulumModulConnection", "ModulConnection\PendulumModulConnection.csproj", "{511DFA3A-40E4-4F97-AA53-FE3E837909F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

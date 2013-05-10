@@ -26,11 +26,11 @@ namespace Management
         {
             Process = _Process;
         }
-
-        public abstract void Run();
-
+        
         public abstract void Run(APresenter _in);
 
         public abstract UserControl getInterface();
+
+        public abstract void Stop();
     }
 }

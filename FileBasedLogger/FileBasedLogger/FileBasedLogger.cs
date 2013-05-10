@@ -8,13 +8,20 @@ using Management;
 
 namespace Log
 {
+    /**
+     * Fájl alapú naplózást megvalósító osztály
+     * */
     public class FileBasedLogger : Logger
     {
         public static string inputName = @"Logs\In-FileLog.txt";
         public static string outputName = @"Logs\Out-FileLog.txt";
         private StreamWriter sw;
+
+        // Sequence-k az ID-k szekvenciális előállításához
         private Sequence inID;
         private Sequence outID;
+
+        // Külön szálon megy a naplózás
         private Thread Logging;
 
         public FileBasedLogger(IProcess _Process,string[] inputLbls, string[]outputLbls) : base(_Process)
@@ -22,6 +29,8 @@ namespace Log
             //Szekvenciák előállítása
             inID = new Sequence(getLastIndex(inputName));
             outID = new Sequence(getLastIndex(outputName));
+
+            // Random nevet generál a log fájlnak
             inputName = System.IO.Path.ChangeExtension(@"Logs\IN_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
             outputName = System.IO.Path.ChangeExtension(@"Logs\OUT_" + System.IO.Path.GetFileName(System.IO.Path.GetTempFileName()), "txt");
 
@@ -30,10 +39,10 @@ namespace Log
 
             Logging = new Thread(keepUpToDate);
             Logging.IsBackground = true;
-            Logging.Start();
         }
-
-        //Kikeresi a kapott fájlból hogy mi volt az utolsó bejegyzés indexe. Ha üres a fájl akkor 0
+        /**
+         * Kikeresi a kapott fájlból hogy mi volt az utolsó bejegyzés indexe. Ha üres a fájl akkor 0
+         * */
         private int getLastIndex(string fileName)
         {
             int starter = 0;
@@ -74,26 +83,41 @@ namespace Log
             return starter;
         }
         
-        //Eltárolja a lekért értéket, hozzáadja a naplózandó sorhoz, majd tovább adja a Controller felé
+        /**
+         * Eltárolja a lekért értéket, hozzáadja a naplózandó sorhoz, majd tovább adja a Controller felé
+         * */
         public override double[] get()
         {
+            // Ha még nem indult el a naplózás, akkor elindítja
+            if (!Logging.IsAlive) Logging.Start();
+
             double [] tempValues = Process.get();
             FIFOInput.Enqueue(new LogRecord(DateTime.Now, inputLabels, tempValues));
             
             return tempValues;
         }
 
-        //Hozzáadja a naplózandó sorhoz a bemeneti értéket, majd tovább adja a Process felé
+        /** 
+         * Hozzáadja a naplózandó sorhoz a bemeneti értéket, majd tovább adja a Process felé
+         * */
         public override void set(double[] u)
         {
+            // Ha még nem indult el a naplózás, akkor elindítja
+            if (!Logging.IsAlive) Logging.Start();
+
             FIFOOutput.Enqueue(new LogRecord(DateTime.Now,outputLabels, u));
             Process.set(u);
         }
 
-        //Eltárolja a lekért értéket, hozzáadja a naplózandó sorhoz, majd tovább adja a Controller felé
-        //Hozzáadja a naplózandó sorhoz a bemeneti értéket, majd tovább adja a Process felé
+        /**
+         * Eltárolja a lekért értéket, hozzáadja a naplózandó sorhoz, majd tovább adja a Controller felé
+         * Hozzáadja a naplózandó sorhoz a bemeneti értéket, majd tovább adja a Process felé
+         * */
         public override double[] update(double[] u)
         {
+            // Ha még nem indult el a naplózás, akkor elindítja
+            if (!Logging.IsAlive) Logging.Start();
+
             double[] tempValues = Process.update(u);
             FIFOInput.Enqueue(new LogRecord(DateTime.Now,inputLabels,tempValues));
             FIFOOutput.Enqueue(new LogRecord(DateTime.Now, outputLabels, u));
@@ -101,21 +125,23 @@ namespace Log
             return tempValues;
         }
 
-        //A függvény először kinaplózza a ki és bemeneti sorban felgyűlt bejegyzéseket.
-        //A függvény ciklukus működésű, 5-ösével naplózza, hogy közel párhuzamosan fusson a két irány naplózása.
-        //A függvény külön szálon való futásra van tervezve
+        /**
+         * A függvény először kinaplózza a ki és bemeneti sorban felgyűlt bejegyzéseket.
+         * A függvény ciklukus működésű, 5-ösével naplózza, hogy közel párhuzamosan fusson a két irány naplózása.
+         * A függvény külön szálon való futásra van tervezve
+         * */
         protected override void keepUpToDate()
         {
             while(true){
 
                 using (sw = File.AppendText(inputName))
-                //using(sw = File.OpenWrite (inputName))
                 {
                     for (int i = 0; i < 5; i++)
                     {
                         if (FIFOInput.Count > 0)
                         {
                             LogRecord tempRec = null;
+
                             // TryDequeue true ha sikerült kivenni, és tempRec-be teszi a kivett rekordot
                             if (FIFOInput.TryDequeue(out tempRec))
                             {
@@ -131,13 +157,14 @@ namespace Log
                 }
 
                 using (sw = File.AppendText(outputName))
-                //using(sw = new StreamWriter(outputName))
                 {
                     for (int i = 0; i < 5; i++)
                     {
                         if (FIFOOutput.Count > 0)
                         {
-                           LogRecord tempRec = null;
+                            LogRecord tempRec = null;
+
+                            // TryDequeue true ha sikerült kivenni, és tempRec-be teszi a kivett rekordot
                             if (FIFOOutput.TryDequeue(out tempRec))
                             {
                                 double[] tempValues = tempRec.Value;

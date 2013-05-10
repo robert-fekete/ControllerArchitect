@@ -8,18 +8,20 @@ using Management;
 
 namespace Log
 {
+    /**
+     * A naplózó modulok ősosztálya
+     * */
     public abstract class Logger : IProcess
     {
-        protected double[] u;                               //A visszaküldött, nem nevesített beavatkozó jel
-        protected double angleDiff;
-        protected double positionDiff;
         private IProcess process;
         protected static string[] inputLabels;
         protected static string[] outputLabels;
         protected ConcurrentQueue<LogRecord> FIFOInput;
         protected ConcurrentQueue<LogRecord> FIFOOutput;
 
-        //Szekvencia a tároláshoz szükséges ID-k előállítására
+        /**
+         * Szekvencia a tároláshoz szükséges ID-k előállítására
+         * */
         protected class Sequence
         {
             int seqValue;
@@ -57,14 +59,14 @@ namespace Log
                 process = value;
             }
         }
-        /// <summary>
-        /// </summary>
+
         public abstract double[] get();
 
         public abstract void set(double[] u);
 
         public abstract double[] update(double[] u);
 
+        // Külön szálban futtatható naplózó fgv
         protected abstract void keepUpToDate();
 
         public string[] getInputLabels()

@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace ControllerGui
 {
+    /**
+     * A program belépési pontja
+     * */
     static class Program
     {
         /// <summary>

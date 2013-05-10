@@ -1,0 +1,2 @@
+﻿File based logger
+Creating txt log files in the Logs folder next to the executable, with random generated names.

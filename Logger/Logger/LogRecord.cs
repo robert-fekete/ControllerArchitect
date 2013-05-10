@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Log
 {
+    /**
+     * A naplózó sor egy eleme, a naplózáshoz szükséges alapinformációkkal
+     * */
     public class LogRecord
     {
         private DateTime timestamp;

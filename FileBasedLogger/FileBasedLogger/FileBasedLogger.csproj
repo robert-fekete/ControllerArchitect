@@ -8,7 +8,7 @@
     <ProjectGuid>{6AE7BB24-60DE-4ED6-AC83-C60E1473F270}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileBasedLogger</RootNamespace>
+    <RootNamespace>Log</RootNamespace>
     <AssemblyName>FileBasedLogger</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -31,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IProcess">
-      <HintPath>..\..\IProcess\IProcess\bin\Release\IProcess.dll</HintPath>
+    <Reference Include="IProcess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\IProcess.dll</HintPath>
+    </Reference>
+    <Reference Include="Logger">
+      <HintPath>..\..\dlls\Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,12 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileBasedLogger.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="LogRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Namespace.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Description.txt" />
+    <EmbeddedResource Include="Picture.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

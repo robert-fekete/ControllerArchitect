@@ -33,13 +33,14 @@
   <ItemGroup>
     <Reference Include="AController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Controller\Controller\bin\Release\AController.dll</HintPath>
+      <HintPath>..\..\dlls\AController.dll</HintPath>
     </Reference>
     <Reference Include="APresenter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dlls\APresenter.dll</HintPath>
     </Reference>
-    <Reference Include="IProcess">
+    <Reference Include="IProcess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dlls\IProcess.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
@@ -71,6 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Namespace.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Description.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Picture.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

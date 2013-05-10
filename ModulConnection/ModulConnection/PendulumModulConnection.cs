@@ -6,7 +6,10 @@ using System.IO;
 
 namespace Pendulum
 {
-    public class ModulConnection : AConnection, Management.IProcess
+    /**
+     * A PendulumModulConnection elrejti az alatta lévő hozzáférési réteg különbözőségét
+     * */
+    public class PendulumModulConnection : AConnection, Management.IProcess
     {
         private APendulumAccession accession;
 
@@ -22,7 +25,7 @@ namespace Pendulum
             }
         }
 
-        public ModulConnection(APendulumAccession _Accessor)
+        public PendulumModulConnection(APendulumAccession _Accessor)
         {
             Accession = _Accessor;
             inputLabels = new string[] { "Angle", "Position" };
@@ -31,7 +34,7 @@ namespace Pendulum
 
         public override double[] get()
         {
-           accession.updateAnalogInput();
+            accession.updateAnalogInput();
             accession.updateDigitalInput();
             return new double[]{accession.Angle,accession.Position};
         }
@@ -53,7 +56,6 @@ namespace Pendulum
 
         public override APresenter getPresenter()
         {
-            //throw new NotImplementedException();
             return new PendulumPresenter();
         }
     }

@@ -1,5 +1,2 @@
 ﻿Provides a test accession with the interface of an inverted pendulum.
-There is three tab of presenter for it:
-Log: A logging area for the most important data.
-Animation: An animated pendulum which shows the current state of the pendulum.
-Graph: A graph which shows the time function of the controlled value.
+It simulates the shift of the cart, and generates some random number for the angle.

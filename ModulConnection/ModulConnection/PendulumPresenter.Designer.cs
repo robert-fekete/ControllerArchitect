@@ -182,7 +182,7 @@
             // 
             // rectangleShape2
             // 
-            this.rectangleShape2.BackgroundImage = global::ModulConnection.Properties.Resources.cart;
+            this.rectangleShape2.BackgroundImage = global::Pendulum.Properties.Resources.cart;
             this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
             this.rectangleShape2.Location = new System.Drawing.Point(196, 220);
             this.rectangleShape2.Name = "rectangleShape2";

@@ -8,8 +8,8 @@
     <ProjectGuid>{511DFA3A-40E4-4F97-AA53-FE3E837909F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ModulConnection</RootNamespace>
-    <AssemblyName>ModulConnection</AssemblyName>
+    <RootNamespace>Pendulum</RootNamespace>
+    <AssemblyName>PendulumModulConnection</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AConnection">
-      <HintPath>..\..\AConnection\AConnection\bin\Release\AConnection.dll</HintPath>
+    <Reference Include="AConnection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\AConnection.dll</HintPath>
     </Reference>
     <Reference Include="APendulumAccession, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -43,8 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dlls\APresenter.dll</HintPath>
     </Reference>
-    <Reference Include="IProcess">
-      <HintPath>..\..\IProcess\IProcess\bin\Release\IProcess.dll</HintPath>
+    <Reference Include="IProcess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dlls\IProcess.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -61,7 +63,7 @@
     <Compile Include="DrawableRectangle.Designer.cs">
       <DependentUpon>DrawableRectangle.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModulConnection.cs" />
+    <Compile Include="PendulumModulConnection.cs" />
     <Compile Include="PendulumPresenter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Namespace.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Description.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Picture.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

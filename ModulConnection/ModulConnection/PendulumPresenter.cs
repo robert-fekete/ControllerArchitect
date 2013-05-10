@@ -10,10 +10,19 @@ using Microsoft.VisualBasic.PowerPacks;
 
 namespace Pendulum
 {
+    /**
+     * Megjelenítő felület a folyamathoz
+     * Egy tab-os felület log-gal, animációval és grafikonnal
+     * */
     public partial class PendulumPresenter : APresenter
     {
+        // A megjelenítőn a befutható pálya hossza
         private int distance;
+
+        // Az eszközben a befutható pálya hossza
         private int deviceDistance = 5;
+
+        // A pendulum rúd hossza
         private int length;
 
         public PendulumPresenter()
@@ -21,26 +30,33 @@ namespace Pendulum
             InitializeComponent();
             distance = lineShape3.StartPoint.X - lineShape2.StartPoint.X;
             length = lineShape4.EndPoint.Y - lineShape4.StartPoint.Y;
-            this.tabControl1.SelectedIndex = 2;
         }
 
+        /**
+         * Logger felület frissítése
+         * Delegate-el és invoke-al van megoldva, hogy ha nem a GUI szálból hívjuk, akkor is tudja frissíteni a felületet (invoke)
+         * */
         public override void updateLog(string[] _input)
         {
             MethodInvoker methodInvokerDelegate = delegate()
             {
                 listView1.Items.Add(new ListViewItem(_input));
-                //textBox1.AppendText(_input); 
             };
 
-            //This will be true if Current thread is not UI thread.
+            // Ha az aktuális szál nem az UI szál akkor igaz
             if (this.InvokeRequired)
                 this.Invoke(methodInvokerDelegate);
             else
                 methodInvokerDelegate();
         }
 
+        /**
+         * Frissíti az animációt, és a grafikont
+         * Delegate-el és invoke-al van megoldva, hogy ha nem a GUI szálból hívjuk, akkor is tudja frissíteni a felületet (invoke)
+         * */
         public override void updateDraw(double[] values)
         {
+            // Kiszámolja a kocsi pozícióját, a kar kezdőpozícióját (line1) és a kar végpozícióját (line2) a szögből
             int cartX = lineShape2.StartPoint.X + Convert.ToInt32((values[1] / deviceDistance) * distance) - 25;
             int lineX1 = cartX + 24;
             int lineY1 = lineShape4.StartPoint.Y;
@@ -58,13 +74,14 @@ namespace Pendulum
                 drawableRectangle1.add(values[1]);
             };
 
-            //This will be true if Current thread is not UI thread.
+            // Ha az aktuális szál nem az UI szál akkor igaz
             if (this.InvokeRequired)
                 this.Invoke(methodInvokerDelegate);
             else
                 methodInvokerDelegate();
         }
 
+        // Alaphelyzetbe állítja a megjelenítőt
         public override void reset()
         {
             listView1.Items.Clear();

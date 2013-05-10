@@ -8,12 +8,16 @@ using Management;
 
 namespace Controller
 {
+    /**
+     * PID szabályozó implementálása
+     * */
     public class PIDController : AController
     {
         public double reference;
         private double Kp;
         private double Ki;
         private double Kd;
+        private bool run;
 
         private double I;
         private long oldTime;
@@ -38,6 +42,9 @@ namespace Controller
             ui.textBox4.Text = Kd.ToString();   //Kd
         }
 
+        /**
+         * A függvény a kapott értéket -1;1 tartományba vágja
+         * */
         public double clap(double input)
         {
             double temp = input;
@@ -52,6 +59,10 @@ namespace Controller
             return temp;
         }
 
+        /**
+         * A fgv beolvassa a textbox-ok értékét a felhasználói felületről
+         * Referencia értékre biztosítja, hogy 0 és 5 között legyen
+         * */
         private void getInput()
         {
             reference = Convert.ToDouble(ui.textBox1.Text);
@@ -63,14 +74,16 @@ namespace Controller
             Kd = Convert.ToDouble(ui.textBox4.Text);
         }
 
-        public override void Run()
-        {}
-
+        /**
+         * A szabályozási folyamatért felelős fgv
+         * */
         public override void Run(APresenter _in)
         {
             getInput();
 
-            double[] state;
+            // state[0] - Angle
+            // state[1] - Position
+            double[] state = Process.get();
             double epsilon = 0.001;
 
             #region Init
@@ -81,7 +94,8 @@ namespace Controller
 
             #endregion
 
-            while (!(state[1] > (reference - epsilon) && state[1] < (reference + epsilon)))
+            // Addig megy a szabályozási folyamat, amíg a referencia érték epsilon sugarú körébe nem kerül a pozíció
+            while (run && !(state[1] > (reference - epsilon) && state[1] < (reference + epsilon)))
             {
 
                 state = Process.get();
@@ -90,11 +104,13 @@ namespace Controller
                 newTime = DateTime.Now.Millisecond;
                 double[] u = new double[] { 0.0 };
 
+                //PID logika
                 double error = reference - state[1];
                 I = I + error;
                 double D = (error - oldError) / (newTime - oldTime);
 
                 u[0] = clap(clap(Kp * error) + clap(Ki * I) + clap(Kd * D));
+
                 if( Double.IsNaN(u[0]))
                 {
                     u[0] = 0.0;
@@ -114,6 +130,14 @@ namespace Controller
         public override UserControl getInterface()
         {
             return ui;
+        }
+
+        /**
+         * Leállítja a folyamat futását
+         * */
+        public override void Stop()
+        {
+            run = false;
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Management;
 
 namespace Pendulum
 {
+    /**
+     * Az AConnection abstract ősosztály egy egységes felületet nyújt, ebből származtatva bármely folyamat hozzá illeszthető a rendszerhez
+     * */
     public abstract class AConnection : Management.IProcess
     {
-        private double reference;
         protected string[] inputLabels;
         protected string[] outputLabels;
 
@@ -26,6 +29,6 @@ namespace Pendulum
             return outputLabels;
         }
 
-        public abstract Management.APresenter getPresenter(); 
+        public abstract APresenter getPresenter(); 
     }
 }

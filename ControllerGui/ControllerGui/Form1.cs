@@ -11,28 +11,46 @@ using System.IO;
 
 namespace ControllerGui
 {
+    /**
+     * Az alkalmazás fő ablaka
+     * */
     public partial class Form1 : Form
     {
+        //AssemblyPicker adja a felületet a megfelelő assembly-k kiválasztásához
         public AssemblyPicker pck;
+
+        //APresenter adja a felületet a folyamat eredményének megjelenítéséhez
         private APresenter pres;
+
+        //A Controller paramétereinek beállításáre szolgáló felület
         private UserControl UI;
+
+        //Settings menü-t megvalósító ablak
         private Settings sett;
+
+        //A futtatásra kész állapotot jelöli
+        bool runnable = false;
 
         public Form1()
         {
             InitializeComponent();
             sett = new Settings(this);
 
-            newPicker();
-
             restoreConfigs();
 
+            newPicker();
+        
             saveFileDialog1.InitialDirectory = @"D:\";
 
+            //A szabályozó futása egy háttérszálon történik
             backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
             backgroundWorker1.WorkerSupportsCancellation = true;
         }
-
+        /**
+         * restoreConfigs
+         * A config fájlból beolvasva beállítja az elmentet beállításokat
+         * config fájl formátuma kulcsszó és érték kettősponttal elválasztva
+         */
         private void restoreConfigs()
         {
             string[] config = System.IO.File.ReadAllLines(@"Config\config");
@@ -61,7 +79,10 @@ namespace ControllerGui
                 }
             }
         }
-
+        /**
+         *  newPicker
+         *  Új összeállítás kiválasztásakor létrehozza az erre szolgáló felületet
+         */
         private void newPicker()
         {
             pck = new AssemblyPicker(this);
@@ -71,6 +92,10 @@ namespace ControllerGui
             this.groupBox1.Controls.Add(pck);
         }
 
+        /**
+         * Ha kiválasztottuk a megfelelő assembly-ket, akkor a controller user interface-e jelenik meg, és a folyamat megjelenítője
+         * Az AssemblyPicker osztályból hívódik meg
+         * */
         public void controllerSelected(UserControl _inputUI,APresenter _inputPres)
         {
             pck.Dispose();
@@ -85,11 +110,17 @@ namespace ControllerGui
             pres = _inputPres;
             pres.Location = new System.Drawing.Point(10, 0);
             this.splitContainer1.Panel2.Controls.Add(pres);
+
+            runnable = true;
         }
 
+        /**
+         * Start gomb listener-e. 
+         * Ha kiválasztottuk az assembly-ket, és azok együttműködésre képesek, és nem fut még a háttérszál, akkor elindítja
+         */
         private void button1_Click(object sender, EventArgs e)
         {
-            if (pck.button1.Enabled == true)
+            if (runnable)
             {
                 if (backgroundWorker1.IsBusy == false)
                 {
@@ -99,28 +130,47 @@ namespace ControllerGui
             }
         }
 
+        /**
+         * Egy delegate fgv a háttérszál számára
+         */
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             Management.Controller.Run(pres);
         }
 
+        /**
+         * Cancel gomb listener-e
+         * Leállítja a háttérszál működését
+         * */
         private void button2_Click(object sender, EventArgs e)
         {
             backgroundWorker1.CancelAsync();
         }
 
+        /**
+         * Exit menüpont listener-e
+         * */
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /**
+         * A New menüpont listener-e
+         * Előhozza az assembly választó felületet, új összeállítást biztosítva
+         * */
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UI.Dispose();
             Management.Clear();
             newPicker();
+            runnable = false;
         }
 
+        /**
+         * Kilépés előtt fut le
+         * Elmenti a beállítások értékeit
+         * */
         private void Form1_FormClosing(object sender, EventArgs e)
         {
             if (!Directory.Exists(@"Config"))
@@ -137,6 +187,10 @@ namespace ControllerGui
             }
         }
 
+        /**
+         * A Settings menüpont listener-e
+         * Előhozza a Settings ablakot
+         * */
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             sett.Show();

@@ -7,6 +7,9 @@ using System.IO;
 
 namespace Pendulum
 {
+    /**
+     * Pendulum kezdetleges szimulálására, a keretrendszer tesztelését segítő osztály
+     * */
     public class TestAccession : APendulumAccession
     {
         private Thread sim;
@@ -24,28 +27,35 @@ namespace Pendulum
             sim.Start();
 
         }
-        /* Külön szállban az attributumokat frissiti*/
-        private void updateDevice()
-        {
-            
-        }
 
+        /**
+         * Interface egyezés miatt
+         * */
         public override double[,] updateAnalogInput()
         {
             return new double[1,2] { {angle,position} };
 
         }
 
+        /**
+         * Interface egyezés miatt
+         * */
         public override bool[,] updateDigitalInput()
         {
             return new bool[2,1] { {isLeftEnd},{isRightEnd}};
         }
 
+        /**
+         * Interface egyezés miatt
+         * */
         public override void updateDigitalOutput()
         {
 
         }
 
+        /**
+         * Ez a fgv felelős magáért a szimulációért
+         * */
         private void simulate()
         {
             double tempPos = 0;
@@ -82,6 +92,7 @@ namespace Pendulum
                     }
                 }
 
+                // Szög random generálása
                 tempAngle = Math.Asin( tempPos - Math.Floor(tempPos) ) *180 / Math.PI;
 
                 lock (lockAttributes)
@@ -90,7 +101,7 @@ namespace Pendulum
                     angle = tempAngle;
                 }
 
-                Thread.Sleep(50);
+                Thread.Sleep(25);
             }
             
 

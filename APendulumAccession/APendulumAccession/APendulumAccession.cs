@@ -5,6 +5,9 @@ using System.IO;
 
 namespace Pendulum
 {
+    /**
+     * Az inverz inga eléréséhez tartozó ősosztály
+     * */
     public abstract class APendulumAccession
     {
         protected bool isRightEnd;
@@ -56,10 +59,7 @@ namespace Pendulum
                 {
                     temp = angle;
                 }
-                using (StreamWriter sw = File.AppendText("AngLog.txt"))
-                {
-                    sw.WriteLine("{0} ang", temp);
-                }
+                
                 return temp;
             }
         }
@@ -74,14 +74,13 @@ namespace Pendulum
                     temp = position;
                 }
 
-                using (StreamWriter sw = File.AppendText("PosLog.txt"))
-                {
-                    sw.WriteLine("{0} pos", temp);
-                }
                 return temp;
             }
         }
 
+        /**
+         * Az inga haladási irányát és sebességét lehet beállítani 
+         * */
         public double GoingDir
         {
             set

@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace Management
 {
+    /**
+     * Abstract ősosztály a Presenter számára
+     * */
     public partial class APresenter : UserControl
     {
         public APresenter()

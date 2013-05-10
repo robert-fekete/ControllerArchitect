@@ -9,8 +9,12 @@ using System.Windows.Forms;
 
 namespace ControllerGui
 {
+    /**
+     * Settings menüpontban felugró, beállításokra szolgáló form
+     * */
     public partial class Settings : Form
     {
+        // Az alkalmazás fő ablaka
         private Form1 owner;
 
         public Settings(Form1 _owner)
@@ -18,9 +22,8 @@ namespace ControllerGui
             InitializeComponent();
 
             owner = _owner;
-
-            folderBrowserDialog1.Description = "Choose some additional assemblies...";
-
+            
+            // Combobox feltöltése
             comboBox1.Items.Add("Select...");
             comboBox1.Items.Add("Controllers");
             comboBox1.Items.Add("Logger");
@@ -29,6 +32,9 @@ namespace ControllerGui
             comboBox1.SelectedIndex = 0;
         }
 
+        /**
+         * A comboboxban értékválasztás után fut le. Beállítja a mappa választó kiindulási pozícióját
+         * */
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBox1.SelectedIndex)
@@ -38,8 +44,13 @@ namespace ControllerGui
                 case 3: folderBrowserDialog1.SelectedPath = AssemblyPicker.defaultConnectionFolder; break;
                 case 4: folderBrowserDialog1.SelectedPath = AssemblyPicker.defaultAccessionFolder; break;
             }
+            textBox1.Text = "";
         }
 
+        /**
+         * Browse gomb listener-e
+         * Feldobja a mappa választó ablakot. és az eredményt a textbox-ba írja
+         * */
         private void button1_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.ShowDialog();
@@ -47,6 +58,10 @@ namespace ControllerGui
             buttonApply.Enabled = true;
         }
 
+        /**
+         * OK gomb listener-e
+         * Az Apply listener-ére hív tovább, frissíti a listákat, majd elrejti az ablakot
+         * */
         private void buttonOk_Click(object sender, EventArgs e)
         {
             buttonApply_Click(sender,e);
@@ -54,12 +69,20 @@ namespace ControllerGui
             this.Hide();
         }
 
+        /**
+         * A Cancel gomb listener-e
+         * Elrejti az ablakot
+         * */
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            owner.pck.refreshLists();
             this.Hide();
         }
 
+        /**
+         * Az Apply gomb listener-e
+         * Ha nem üres a textbox értéke, akkor a comboboxnak megfelelő listához tartozó kiinduló mappát megváltoztatja
+         * Érvényteleníti az Apply gombot, és frissíti a listákat
+         * */
         private void buttonApply_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -73,6 +96,7 @@ namespace ControllerGui
                 }
             }
             buttonApply.Enabled = false;
+            owner.pck.refreshLists();
         }
     }
 }
